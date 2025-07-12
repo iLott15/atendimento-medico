@@ -29,6 +29,12 @@ public class MedicoController {
         return ResponseEntity.ok(salvo);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Medico> atualizar(@PathVariable Long id, @RequestBody @Valid Medico medicoAtualizado) {
+        Medico medico = medicoService.atualizar(id, medicoAtualizado);
+        return ResponseEntity.ok(medico);
+    }
+
     @GetMapping("/{id}")
     public Medico buscarPorId(@PathVariable Long id) {
         return medicoService.buscarPorId(id).orElse(null);
@@ -37,11 +43,5 @@ public class MedicoController {
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         medicoService.deletar(id);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Medico> atualizar(@PathVariable Long id, @RequestBody @Valid Medico medicoAtualizado) {
-        Medico medico = medicoService.atualizar(id, medicoAtualizado);
-        return ResponseEntity.ok(medico);
     }
 }

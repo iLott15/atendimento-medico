@@ -27,6 +27,12 @@ public class PacienteController {
                 .collect(Collectors.toList());
     }
 
+    @PutMapping("/{id}")
+    public Paciente atualizar(@PathVariable Long id, @RequestBody Paciente pacienteAtualizado) {
+        pacienteAtualizado.setId(id);
+        return pacienteService.salvar(pacienteAtualizado);
+    }
+
     @GetMapping("/{id}")
     public Paciente buscarPorId(@PathVariable Long id) {
         return pacienteService.buscarPorId(id).orElse(null);
