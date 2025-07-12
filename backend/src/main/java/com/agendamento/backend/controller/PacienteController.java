@@ -40,7 +40,7 @@ public class PacienteController {
 
     @GetMapping("/{id}")
     public Paciente buscarPorId(@PathVariable Long id) {
-        return pacienteService.buscarPorId(id).orElse(null);
+        return pacienteService.buscarPorId(id);
     }
 
     @DeleteMapping("/{id}")

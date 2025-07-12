@@ -25,6 +25,7 @@ public class Agendamento {
     @Future(message = "A data da consulta deve estar no futuro")
     private LocalDateTime data;
 
+    @Column(nullable = true)
     private String motivo;
 
     // Getters e Setters
@@ -66,5 +67,15 @@ public class Agendamento {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+    private String descricao;
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

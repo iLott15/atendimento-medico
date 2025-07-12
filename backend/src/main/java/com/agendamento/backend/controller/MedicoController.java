@@ -37,7 +37,7 @@ public class MedicoController {
 
     @GetMapping("/{id}")
     public Medico buscarPorId(@PathVariable Long id) {
-        return medicoService.buscarPorId(id).orElse(null);
+        return medicoService.buscarPorId(id);
     }
 
     @DeleteMapping("/{id}")

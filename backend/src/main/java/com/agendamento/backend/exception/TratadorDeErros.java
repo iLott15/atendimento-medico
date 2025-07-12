@@ -18,8 +18,8 @@ public class TratadorDeErros {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> tratarValidacao(MethodArgumentNotValidException ex) {
         List<String> erros = ex.getBindingResult().getFieldErrors().stream()
-            .map(erro -> erro.getDefaultMessage())
-            .collect(Collectors.toList());
+                .map(erro -> erro.getDefaultMessage())
+                .collect(Collectors.toList());
 
         Map<String, Object> resposta = new HashMap<>();
         resposta.put("timestamp", LocalDateTime.now());
@@ -28,6 +28,4 @@ public class TratadorDeErros {
 
         return ResponseEntity.badRequest().body(resposta);
     }
-
-    // Aqui podemos adicionar outros tratadores depois, se quiser
 }

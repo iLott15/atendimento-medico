@@ -5,6 +5,7 @@ import com.agendamento.backend.repository.AgendamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,14 @@ public class AgendamentoService {
 
     @Autowired
     private AgendamentoRepository agendamentoRepository;
+
+    public List<Agendamento> filtrar(Long medicoId, Long pacienteId, LocalDate data) {
+        if (medicoId == null && pacienteId == null && data == null) {
+            return agendamentoRepository.findAll();
+        }
+
+        return agendamentoRepository.findByFiltros(medicoId, pacienteId, data);
+    }
 
     public List<Agendamento> listarTodos() {
         return agendamentoRepository.findAll();
@@ -28,5 +37,9 @@ public class AgendamentoService {
 
     public void deletar(Long id) {
         agendamentoRepository.deleteById(id);
+    }
+
+    public void deletarEmMassa(List<Long> ids) {
+        agendamentoRepository.deleteAllById(ids);
     }
 }

@@ -1,31 +1,31 @@
 package com.agendamento.backend.service;
 
 import com.agendamento.backend.model.Medico;
+import com.agendamento.backend.repository.AgendamentoRepository;
 import com.agendamento.backend.repository.MedicoRepository;
-
-// import jakarta.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
-import java.util.Optional;
 
-// Camada de lógica de negócio
 @Service
 public class MedicoService {
 
     @Autowired
     private MedicoRepository medicoRepository;
 
+    @Autowired
+    private AgendamentoRepository agendamentoRepository;
+
     public List<Medico> listarTodos() {
         return medicoRepository.findAll();
     }
 
-    public Optional<Medico> buscarPorId(Long id) {
-        return medicoRepository.findById(id);
+    public Medico buscarPorId(Long id) {
+        return medicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Médico não encontrado"));
     }
 
     public Medico salvar(Medico medico) {
@@ -46,6 +46,13 @@ public class MedicoService {
     }
 
     public void deletar(Long id) {
-        medicoRepository.deleteById(id);
+        Medico medico = medicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Médico não encontrado"));
+
+        if (!agendamentoRepository.findByMedicoId(medico.getId()).isEmpty()) {
+            throw new RuntimeException("Médico possui agendamentos e não pode ser excluído.");
+        }
+
+        medicoRepository.deleteById(medico.getId());
     }
 }

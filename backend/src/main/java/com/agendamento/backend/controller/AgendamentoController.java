@@ -1,26 +1,48 @@
 package com.agendamento.backend.controller;
 
+import com.agendamento.backend.dto.AgendamentoDTO;
 import com.agendamento.backend.model.Agendamento;
+import com.agendamento.backend.model.Medico;
+import com.agendamento.backend.model.Paciente;
 import com.agendamento.backend.service.AgendamentoService;
+import com.agendamento.backend.service.MedicoService;
+import com.agendamento.backend.service.PacienteService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/agendamentos") // Ex: http://localhost:8080/agendamentos
+@RequestMapping("/agendamentos")
 public class AgendamentoController {
 
     @Autowired
     private AgendamentoService agendamentoService;
 
-    @GetMapping
-    public List<Agendamento> listar() {
-        return agendamentoService.listarTodos();
-    }
+    @Autowired
+    private MedicoService medicoService;
+
+    @Autowired
+    private PacienteService pacienteService;
 
     @PostMapping
-    public Agendamento criar(@RequestBody Agendamento agendamento) {
+    public Agendamento criar(@RequestBody @Valid AgendamentoDTO dto) {
+        Medico medico = medicoService.buscarPorId(dto.getMedicoId());
+        Paciente paciente = pacienteService.buscarPorId(dto.getPacienteId());
+
+        Agendamento agendamento = new Agendamento();
+        agendamento.setMedico(medico);
+        agendamento.setPaciente(paciente);
+        agendamento.setData(dto.getData());
+        agendamento.setDescricao(dto.getDescricao());
+        agendamento.setMotivo(dto.getMotivo()); // 👈 aqui
+
         return agendamentoService.salvar(agendamento);
     }
 
@@ -30,13 +52,27 @@ public class AgendamentoController {
         return agendamentoService.salvar(agendamentoAtualizado);
     }
 
-    @GetMapping("/{id}")
-    public Agendamento buscarPorId(@PathVariable Long id) {
-        return agendamentoService.buscarPorId(id).orElse(null);
+    @GetMapping
+    public List<Agendamento> listar() {
+        return agendamentoService.listarTodos();
+    }
+
+    @GetMapping("/filtrar")
+    public List<Agendamento> filtrar(
+            @RequestParam(required = false) Long medicoId,
+            @RequestParam(required = false) Long pacienteId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+        return agendamentoService.filtrar(medicoId, pacienteId, data);
     }
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         agendamentoService.deletar(id);
+    }
+
+    @DeleteMapping("/delete-massa")
+    public ResponseEntity<Void> deletarEmMassa(@RequestBody List<Long> ids) {
+        agendamentoService.deletarEmMassa(ids);
+        return ResponseEntity.noContent().build();
     }
 }
