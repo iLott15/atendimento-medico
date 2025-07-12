@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springdoc.core.annotations.ParameterObject;
+
 
 @RestController
 @RequestMapping("/medicos")
@@ -19,8 +22,8 @@ public class MedicoController {
     private MedicoService medicoService;
 
     @GetMapping
-    public List<Medico> listar() {
-        return medicoService.listarTodos();
+    public Page<Medico> listar(@ParameterObject Pageable pageable) {
+        return medicoService.listarTodos(pageable);
     }
 
     @PostMapping

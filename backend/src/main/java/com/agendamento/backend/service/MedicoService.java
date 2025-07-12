@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 @Service
 public class MedicoService {
@@ -16,12 +18,12 @@ public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
+    public Page<Medico> listarTodos(Pageable pageable) {
+        return medicoRepository.findAll(pageable);
+    }
+
     @Autowired
     private AgendamentoRepository agendamentoRepository;
-
-    public List<Medico> listarTodos() {
-        return medicoRepository.findAll();
-    }
 
     public Medico buscarPorId(Long id) {
         return medicoRepository.findById(id)
