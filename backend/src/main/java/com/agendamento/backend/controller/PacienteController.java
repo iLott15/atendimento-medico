@@ -20,6 +20,11 @@ public class PacienteController {
         return pacienteService.listarTodos();
     }
 
+    @PostMapping
+    public Paciente criar(@RequestBody Paciente paciente) {
+        return pacienteService.salvar(paciente);
+    }
+
     @PostMapping("/em-lote")
     public List<Paciente> criarEmLote(@RequestBody List<Paciente> pacientes) {
         return pacientes.stream()
