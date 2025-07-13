@@ -46,6 +46,10 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/webjars/**")
                         .permitAll()
+
+                        // ⚠️ Apenas ADMIN pode acessar qualquer coisa de /admin
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider(autenticacaoService))
                 .addFilterBefore(new SecurityFilter(tokenService, usuarioRepository),
