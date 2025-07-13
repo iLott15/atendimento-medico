@@ -1,10 +1,16 @@
 package com.agendamento.backend.repository;
 
-import com.agendamento.backend.model.Medico;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-// Interface que fornece acesso ao banco (CRUD pronto)
+import com.agendamento.backend.model.Medico;
+
 @Repository
 public interface MedicoRepository extends JpaRepository<Medico, Long> {
+
+    Page<Medico> findByNomeContainingIgnoreCase(String nome, Pageable pageable);
+
+    Page<Medico> findByEspecialidadeIgnoreCase(String especialidade, Pageable pageable);
 }

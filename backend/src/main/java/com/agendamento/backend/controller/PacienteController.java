@@ -5,19 +5,28 @@ import com.agendamento.backend.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+
+import com.agendamento.backend.dto.PacienteResponseDTO;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/pacientes") // Ex: http://localhost:8080/pacientes
+@RequestMapping("/pacientes")
 public class PacienteController {
 
     @Autowired
     private PacienteService pacienteService;
 
     @GetMapping
-    public List<Paciente> listar() {
-        return pacienteService.listarTodos();
+    public ResponseEntity<Page<PacienteResponseDTO>> listar(
+            @PageableDefault(size = 10, sort = "nome") Pageable pageable) {
+        var page = pacienteService.listar(pageable);
+        return ResponseEntity.ok(page);
     }
 
     @PostMapping

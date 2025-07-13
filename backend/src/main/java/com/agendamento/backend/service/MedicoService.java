@@ -1,5 +1,6 @@
 package com.agendamento.backend.service;
 
+import com.agendamento.backend.dto.MedicoResponseDTO;
 import com.agendamento.backend.model.Medico;
 import com.agendamento.backend.repository.AgendamentoRepository;
 import com.agendamento.backend.repository.MedicoRepository;
@@ -10,7 +11,6 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 
 @Service
 public class MedicoService {
@@ -56,5 +56,20 @@ public class MedicoService {
         }
 
         medicoRepository.deleteById(medico.getId());
+    }
+
+    public Page<MedicoResponseDTO> listar(Pageable pageable) {
+        return medicoRepository.findAll(pageable)
+                .map(MedicoResponseDTO::new);
+    }
+
+    public Page<MedicoResponseDTO> buscarPorNome(String nome, Pageable pageable) {
+        return medicoRepository.findByNomeContainingIgnoreCase(nome, pageable)
+                .map(MedicoResponseDTO::new);
+    }
+
+    public Page<MedicoResponseDTO> buscarPorEspecialidade(String especialidade, Pageable pageable) {
+        return medicoRepository.findByEspecialidadeIgnoreCase(especialidade, pageable)
+                .map(MedicoResponseDTO::new);
     }
 }
