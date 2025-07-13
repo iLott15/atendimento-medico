@@ -1,6 +1,7 @@
 package com.agendamento.backend.controller;
 
 import com.agendamento.backend.dto.AgendamentoDTO;
+import com.agendamento.backend.dto.AgendamentoResponseDTO;
 import com.agendamento.backend.model.Agendamento;
 import com.agendamento.backend.model.Medico;
 import com.agendamento.backend.model.Paciente;
@@ -53,16 +54,21 @@ public class AgendamentoController {
     }
 
     @GetMapping
-    public List<Agendamento> listar() {
-        return agendamentoService.listarTodos();
+    public List<AgendamentoResponseDTO> listar() {
+        return agendamentoService.listarTodos().stream()
+                .map(AgendamentoResponseDTO::new)
+                .toList();
     }
 
     @GetMapping("/filtrar")
-    public List<Agendamento> filtrar(
+    public List<AgendamentoResponseDTO> filtrar(
             @RequestParam(required = false) Long medicoId,
             @RequestParam(required = false) Long pacienteId,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
-        return agendamentoService.filtrar(medicoId, pacienteId, data);
+
+        return agendamentoService.filtrar(medicoId, pacienteId, data).stream()
+                .map(AgendamentoResponseDTO::new)
+                .toList();
     }
 
     @DeleteMapping("/{id}")

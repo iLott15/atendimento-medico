@@ -25,6 +25,10 @@ public class MedicoService {
     @Autowired
     private AgendamentoRepository agendamentoRepository;
 
+    public MedicoService(MedicoRepository medicoRepository) {
+        this.medicoRepository = medicoRepository;
+    }
+
     public Medico buscarPorId(Long id) {
         return medicoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Médico não encontrado"));
@@ -71,5 +75,9 @@ public class MedicoService {
     public Page<MedicoResponseDTO> buscarPorEspecialidade(String especialidade, Pageable pageable) {
         return medicoRepository.findByEspecialidadeIgnoreCase(especialidade, pageable)
                 .map(MedicoResponseDTO::new);
+    }
+
+    public void setMedicoRepository(MedicoRepository medicoRepository) {
+        this.medicoRepository = medicoRepository;
     }
 }

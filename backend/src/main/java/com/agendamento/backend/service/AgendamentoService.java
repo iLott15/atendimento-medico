@@ -32,7 +32,19 @@ public class AgendamentoService {
     }
 
     public Agendamento salvar(Agendamento agendamento) {
+        boolean conflito = agendamentoRepository.existsByMedicoIdAndData(
+                agendamento.getMedico().getId(),
+                agendamento.getData());
+
+        if (conflito) {
+            throw new RuntimeException("Já existe um agendamento para este médico neste horário.");
+        }
+
         return agendamentoRepository.save(agendamento);
+    }
+
+    public AgendamentoService(AgendamentoRepository agendamentoRepository) {
+        this.agendamentoRepository = agendamentoRepository;
     }
 
     public void deletar(Long id) {

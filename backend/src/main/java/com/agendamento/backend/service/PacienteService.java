@@ -26,6 +26,10 @@ public class PacienteService {
                 .map(PacienteResponseDTO::new);
     }
 
+    public PacienteService(PacienteRepository pacienteRepository) {
+        this.pacienteRepository = pacienteRepository;
+    }
+
     public List<Paciente> listarTodos() {
         return pacienteRepository.findAll();
     }
