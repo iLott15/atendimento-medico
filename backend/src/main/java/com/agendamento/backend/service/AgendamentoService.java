@@ -1,7 +1,13 @@
 package com.agendamento.backend.service;
 
+import com.agendamento.backend.dto.AgendamentoRequestDTO;
+import com.agendamento.backend.dto.AgendamentoResponseDTO;
+import com.agendamento.backend.exception.HorarioIndisponivelException;
 import com.agendamento.backend.model.Agendamento;
 import com.agendamento.backend.repository.AgendamentoRepository;
+import com.agendamento.backend.repository.MedicoRepository;
+import com.agendamento.backend.repository.PacienteRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +21,43 @@ public class AgendamentoService {
     @Autowired
     private AgendamentoRepository agendamentoRepository;
 
+    @Autowired
+    private MedicoRepository medicoRepository;
+
+    @Autowired
+    private PacienteRepository pacienteRepository;
+
     public List<Agendamento> filtrar(Long medicoId, Long pacienteId, LocalDate data) {
         if (medicoId == null && pacienteId == null && data == null) {
             return agendamentoRepository.findAll();
         }
 
         return agendamentoRepository.findByFiltros(medicoId, pacienteId, data);
+    }
+
+    public AgendamentoResponseDTO agendar(AgendamentoRequestDTO dto) {
+        // Verifica conflito de horário para o médico
+        boolean conflito = agendamentoRepository.existsByMedicoIdAndData(dto.idMedico(), dto.data());
+
+        if (conflito) {
+            throw new HorarioIndisponivelException("Médico já possui agendamento neste horário.");
+        }
+
+        var medico = medicoRepository.findById(dto.idMedico())
+                .orElseThrow(() -> new RuntimeException("Médico não encontrado"));
+
+        var paciente = pacienteRepository.findById(dto.idPaciente())
+                .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
+
+        Agendamento agendamento = new Agendamento();
+        agendamento.setMedico(medico);
+        agendamento.setPaciente(paciente);
+        agendamento.setData(dto.data());
+        agendamento.setMotivo(dto.motivo());
+        agendamento.setDescricao(dto.descricao());
+
+        Agendamento salvo = agendamentoRepository.save(agendamento);
+        return new AgendamentoResponseDTO(salvo);
     }
 
     public List<Agendamento> listarTodos() {

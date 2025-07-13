@@ -1,6 +1,7 @@
 package com.agendamento.backend.controller;
 
 import com.agendamento.backend.dto.AgendamentoDTO;
+import com.agendamento.backend.dto.AgendamentoRequestDTO;
 import com.agendamento.backend.dto.AgendamentoResponseDTO;
 import com.agendamento.backend.model.Agendamento;
 import com.agendamento.backend.model.Medico;
@@ -42,7 +43,7 @@ public class AgendamentoController {
         agendamento.setPaciente(paciente);
         agendamento.setData(dto.getData());
         agendamento.setDescricao(dto.getDescricao());
-        agendamento.setMotivo(dto.getMotivo()); // 👈 aqui
+        agendamento.setMotivo(dto.getMotivo());
 
         return agendamentoService.salvar(agendamento);
     }
@@ -51,6 +52,12 @@ public class AgendamentoController {
     public Agendamento atualizar(@PathVariable Long id, @RequestBody Agendamento agendamentoAtualizado) {
         agendamentoAtualizado.setId(id);
         return agendamentoService.salvar(agendamentoAtualizado);
+    }
+
+    @PostMapping
+    public ResponseEntity<AgendamentoResponseDTO> agendar(@RequestBody @Valid AgendamentoRequestDTO dto) {
+        AgendamentoResponseDTO response = agendamentoService.agendar(dto);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
