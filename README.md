@@ -1,58 +1,83 @@
-Documentação Técnica - Sistema de Agendamento Médico
-Instalação de Ferramentas
-1. Node.js (requisito para Vue.js):
-- Site: https://nodejs.org
-- Verificação após instalação:
+Sistema de Agendamento Médico 🩺
+
+Este é um projeto fullstack desenvolvido como parte de um desafio técnico. Seu objetivo é permitir o agendamento de consultas médicas de forma simples, segura e escalável.
+
+⸻
+
+🧰 Tecnologias Utilizadas
+
+Backend
+	•	Java 17
+	•	Spring Boot 3.4.7
+	•	Spring Data JPA
+	•	Spring Security + JWT
+	•	PostgreSQL
+	•	Maven
+	•	Swagger (Documentação de API)
+	•	JUnit + Mockito (Testes)
+
+Frontend (em breve)
+	•	Vue.js
+
+⸻
+
+⚙️ Instalação de Ferramentas
+
+1. Node.js (Vue)
+
 $ node -v
 $ npm -v
-2. Vue CLI (interface de criação de projetos Vue):
-- Instalação global:
+
+Instale em: https://nodejs.org
+
+2. Vue CLI
+
 $ npm install -g @vue/cli
-- Verificação:
 $ vue --version
-3. Java (JDK 17):
-- Instalação via Homebrew:
+
+3. Java (JDK 17)
+
 $ brew install openjdk@17
-- Adição ao PATH:
 $ echo 'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
 $ source ~/.zshrc
-- Verificação:
 $ java -version
-4. PostgreSQL:
-- Instalação via Homebrew:
-Documentação Técnica - Sistema de Agendamento Médico
+
+4. PostgreSQL
+
 $ brew install postgresql
-- Inicialização do serviço:
 $ brew services start postgresql
-- Criação de usuário e banco:
 $ createuser -s postgres
 $ createdb agendamento_db
-- Acesso:
 $ psql postgres
-Documentação Técnica - Sistema de Agendamento Médico
-Criação do Projeto Spring Boot
-1. Acessado: https://start.spring.io
-2. Configurações utilizadas:
-- Project: Maven
-- Language: Java
-- Spring Boot: 3.4.7
-- Group: com.agendamento
-- Artifact: backend
-- Nome do projeto: backend
-- Java version: 17
-- Packaging: Jar
-3. Dependências adicionadas:
-- Spring Web
-- Spring Data JPA
-- PostgreSQL Driver
-- Spring Security
-- DevTools
-- Validation
-4. Projeto gerado e salvo dentro da pasta `agendamento-medico/backend`.
-Documentação Técnica - Sistema de Agendamento Médico
-Configuração do Banco de Dados
-1. Arquivo editado: src/main/resources/application.properties
-2. Conteúdo adicionado:
+
+
+⸻
+
+🏗️ Criação do Projeto Spring Boot
+	•	Site: start.spring.io
+	•	Project: Maven
+	•	Language: Java
+	•	Spring Boot: 3.4.7
+	•	Group: com.agendamento
+	•	Artifact: backend
+	•	Nome do projeto: backend
+	•	Java version: 17
+	•	Packaging: Jar
+
+Dependências adicionadas:
+	•	Spring Web
+	•	Spring Data JPA
+	•	PostgreSQL Driver
+	•	Spring Security
+	•	DevTools
+	•	Validation
+
+⸻
+
+🛠️ Configuração do Banco de Dados
+
+src/main/resources/application.properties
+
 spring.datasource.url=jdbc:postgresql://localhost:5432/agendamento_db
 spring.datasource.username=ivanlott
 spring.datasource.password=atendimentomedico
@@ -60,60 +85,158 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 server.port=8080
-Documentação Técnica - Sistema de Agendamento Médico
-Execução do Projeto
-1. Dentro da pasta backend:
+
+
+⸻
+
+▶️ Execução do Projeto
+
 $ ./mvnw spring-boot:run
-2. Caso o mvnw não esteja presente, instalar Maven globalmente:
+
+Caso necessário:
+
 $ brew install maven
 $ mvn spring-boot:run
-3. O backend ficará disponível em: http://localhost:8080
-Passo a Passo – Preenchimento do Banco via API (Spring Boot + Insomnia)
-1. Criar entidade Medico (Medico.java)
-- Campos: id, nome, email, crm, especialidade, endereco (@Embedded)
-2. Criar entidade Endereco (Endereco.java)
-- Campos: logradouro, bairro, cep, cidade, uf, numero, complemento (@Embeddable)
-3. Criar MedicoRepository (interface JpaRepository<Medico, Long>)
-4. Criar MedicoService com métodos:
-- listarTodos, buscarPorId, salvar, atualizar, deletar
-5. Criar MedicoController com endpoints:
-- GET /medicos, GET /medicos/{id}, POST /medicos, PUT /medicos/{id}, DELETE /medicos/{id}
-6. Substituir EntityNotFoundException por ResponseStatusException(HttpStatus.NOT_FOUND, ...)
-7. Testar com Insomnia:
+
+Backend disponível em: http://localhost:8080
+
+⸻
+
+✅ Funcionalidades Implementadas
+	•	Cadastro, listagem, edição e remoção de médicos, pacientes e agendamentos
+	•	Filtros por médico, paciente e data
+	•	Validações com @Valid
+	•	Autenticação via JWT (com login e geração de token)
+	•	Controle de acesso por perfil (ROLE_ADMIN, ROLE_MEDICO, ROLE_PACIENTE)
+	•	Testes com JUnit e Mockito
+	•	Documentação com Swagger (/swagger-ui/index.html)
+
+⸻
+
+🔐 Autenticação com JWT
+	•	Rota pública:
+
+POST /login
+{
+  "login": "usuario",
+  "senha": "123456"
+}
+
+	•	Resposta:
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
+
+	•	Para autenticar, envie o token no header:
+
+Authorization: Bearer SEU_TOKEN_AQUI
+
+
+⸻
+
+📄 Swagger
+
+Acesse:
+
+http://localhost:8080/swagger-ui/index.html
+
+
+⸻
+
+🔁 Passo a Passo – Cadastro via API (Insomnia ou Postman)
+
+Criar Médico
+
 POST http://localhost:8080/medicos
+
 {
-"nome": "The Edge",
-"email": "the.edge@u2.com",
-"crm": "777",
-"especialidade": "NEUROCIRURGIA",
-"endereco": {
-"logradouro": "Rua Joshua Tree",
-"bairro": "Rockville",
-"cep": "4321-000",
-"cidade": "Dublin",
-"uf": "IR",
-"numero": "1",
-"complemento": "Estúdio 360"
+  "nome": "The Edge",
+  "email": "the.edge@u2.com",
+  "crm": "777",
+  "especialidade": "NEUROCIRURGIA",
+  "endereco": {
+    "logradouro": "Rua Joshua Tree",
+    "bairro": "Rockville",
+    "cep": "4321-000",
+    "cidade": "Dublin",
+    "uf": "IR",
+    "numero": "1",
+    "complemento": "Estúdio 360"
+  }
 }
-}
+
+Atualizar Médico
+
 PUT http://localhost:8080/medicos/2
-(mesmo corpo do POST)
-Exemplo de Registro Adicionado via PUT:
-PUT http://localhost:8080/medicos/2
-Content-Type: application/json
+
 {
-"id": 2,
-"nome": "Bono",
-"email": "bono@u2.com",
-"crm": "12314",
-"especialidade": "CARDIOLOGIA",
-"endereco": {
-"logradouro": "Rua Cedarwood",
-"bairro": "Rockville",
-"cep": "32412-000",
-"cidade": "Dublin",
-"uf": "IE",
-"numero": "2",
-"complemento": "Estúdio HTDAB"
+  "id": 2,
+  "nome": "Bono",
+  "email": "bono@u2.com",
+  "crm": "12314",
+  "especialidade": "CARDIOLOGIA",
+  "endereco": {
+    "logradouro": "Rua Cedarwood",
+    "bairro": "Rockville",
+    "cep": "32412-000",
+    "cidade": "Dublin",
+    "uf": "IE",
+    "numero": "2",
+    "complemento": "Estúdio HTDAB"
+  }
 }
-}
+
+
+⸻
+
+🧪 Testes Automatizados
+
+Testes criados:
+	•	MedicoServiceTest
+	•	PacienteServiceTest
+	•	AgendamentoServiceTest
+	•	AgendamentoControllerTest
+
+⸻
+
+🧾 Estrutura das Tabelas
+	•	usuarios: id, login, senha, role, paciente_id, medico_id, admin_id
+	•	medicos, pacientes, admin: informações pessoais
+	•	agendamentos: data, motivo, descrição, FK para médico e paciente
+
+⸻
+
+🧭 Organização do Projeto
+
+agendamento-medico/
+│
+├── backend/
+│   ├── controller/
+│   ├── dto/
+│   ├── model/
+│   ├── repository/
+│   ├── service/
+│   ├── config/
+│   └── security/
+└── frontend/ (em breve)
+
+
+⸻
+
+📌 Observações Finais
+	•	Projeto com arquitetura limpa (Controller → Service → Repository)
+	•	Separação por perfis (ROLE_ADMIN, ROLE_MEDICO, ROLE_PACIENTE)
+	•	Validações robustas e tratamento de exceções
+
+⸻
+
+🎯 Próximos passos
+	•	Finalizar frontend em Vue.js
+	•	Adicionar testes de integração
+	•	Realizar deploy (Render, Railway ou outro)
+	•	Criar documentação técnica final em PDF
+
+⸻
+
+Developed with ☘️, rock and code — by Ivan Lott

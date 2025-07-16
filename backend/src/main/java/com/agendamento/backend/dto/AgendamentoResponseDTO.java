@@ -22,6 +22,16 @@ public class AgendamentoResponseDTO {
         this.descricao = agendamento.getDescricao();
     }
 
+    public AgendamentoResponseDTO(Long id, LocalDateTime data, String descricao, String motivo, String medicoNome,
+            String pacienteNome) {
+        this.id = id;
+        this.data = data;
+        this.descricao = descricao;
+        this.motivo = motivo;
+        this.medicoNome = medicoNome;
+        this.pacienteNome = pacienteNome;
+    }
+
     // Getters e Setters
 
     public Long getId() {
