@@ -33,7 +33,7 @@ public class AgendamentoController {
     @Autowired
     private PacienteService pacienteService;
 
-    @PostMapping
+    @PostMapping("/criar")
     public Agendamento criar(@RequestBody @Valid AgendamentoDTO dto) {
         Medico medico = medicoService.buscarPorId(dto.getMedicoId());
         Paciente paciente = pacienteService.buscarPorId(dto.getPacienteId());
@@ -48,16 +48,16 @@ public class AgendamentoController {
         return agendamentoService.salvar(agendamento);
     }
 
+    @PostMapping("/agendar")
+    public ResponseEntity<AgendamentoResponseDTO> agendar(@RequestBody @Valid AgendamentoRequestDTO dto) {
+        AgendamentoResponseDTO response = agendamentoService.agendar(dto);
+        return ResponseEntity.ok(response);
+    }
+
     @PutMapping("/{id}")
     public Agendamento atualizar(@PathVariable Long id, @RequestBody Agendamento agendamentoAtualizado) {
         agendamentoAtualizado.setId(id);
         return agendamentoService.salvar(agendamentoAtualizado);
-    }
-
-    @PostMapping
-    public ResponseEntity<AgendamentoResponseDTO> agendar(@RequestBody @Valid AgendamentoRequestDTO dto) {
-        AgendamentoResponseDTO response = agendamentoService.agendar(dto);
-        return ResponseEntity.ok(response);
     }
 
     @GetMapping
