@@ -235,7 +235,6 @@ agendamento-medico/
 	•	Finalizar frontend em Vue.js
 	•	Adicionar testes de integração
 	•	Realizar deploy (Render, Railway ou outro)
-	•	Criar documentação técnica final em PDF
 
 ⸻
 
