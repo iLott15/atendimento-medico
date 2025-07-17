@@ -12,6 +12,9 @@ public class MedicoResponseDTO {
     private String crm;
     private String especialidade;
 
+    public MedicoResponseDTO() {
+    }
+
     public MedicoResponseDTO(Medico medico) {
         this.id = medico.getId();
         this.nome = medico.getNome();
@@ -19,6 +22,4 @@ public class MedicoResponseDTO {
         this.crm = medico.getCrm();
         this.especialidade = medico.getEspecialidade();
     }
-
-    // Getters e setters ou use Lombok (@Data)
 }

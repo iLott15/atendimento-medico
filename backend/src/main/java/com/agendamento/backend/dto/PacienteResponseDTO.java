@@ -9,6 +9,8 @@ public class PacienteResponseDTO {
     private String nome;
     private String email;
 
+    public PacienteResponseDTO() {}
+
     public PacienteResponseDTO(Paciente paciente) {
         this.id = paciente.getId();
         this.nome = paciente.getNome();
