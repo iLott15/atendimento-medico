@@ -4,21 +4,22 @@ import com.agendamento.backend.service.TokenService;
 import com.agendamento.backend.repository.UsuarioRepository;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Component
 public class SecurityFilter extends OncePerRequestFilter {
 
-    private final TokenService tokenService;
-    private final UsuarioRepository usuarioRepository;
+    @Autowired
+    private TokenService tokenService;
 
-    public SecurityFilter(TokenService tokenService, UsuarioRepository usuarioRepository) {
-        this.tokenService = tokenService;
-        this.usuarioRepository = usuarioRepository;
-    }
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

@@ -238,4 +238,4 @@ agendamento-medico/
 
 ⸻
 
-Developed with ☘️, rock and code — by Ivan Lott
+Developed with rock and code — by Ivan Lott
