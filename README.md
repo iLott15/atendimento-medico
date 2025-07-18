@@ -1,241 +1,229 @@
-Sistema de Agendamento Médico 🩺
+# 🩺 Sistema de Agendamento Médico
 
-Este é um projeto fullstack desenvolvido como parte de um desafio técnico. Seu objetivo é permitir o agendamento de consultas médicas de forma simples, segura e escalável.
+Projeto fullstack construído como parte de um desafio técnico, com foco em qualidade de código, autenticação segura, e arquitetura escalável. Permite gerenciar médicos, pacientes e agendamentos.
 
-⸻
+---
 
-🧰 Tecnologias Utilizadas
+## 🧰 Tecnologias Utilizadas
 
-Backend
-	•	Java 17
-	•	Spring Boot 3.4.7
-	•	Spring Data JPA
-	•	Spring Security + JWT
-	•	PostgreSQL
-	•	Maven
-	•	Swagger (Documentação de API)
-	•	JUnit + Mockito (Testes)
+### 🔙 Backend (Java)
+- Java 17
+- Spring Boot 3.4.7
+- Spring Data JPA
+- Spring Security + JWT
+- PostgreSQL
+- Swagger (Documentação de API)
+- JUnit + Mockito (Testes unitários e integração)
+- Maven
 
-Frontend (em breve)
-	•	Vue.js
+### 🔜 Frontend (Vue)
+- Vue 3 + Composition API
+- Vue Router
+- Pinia (State Management)
+- Prettier
+- Vite
+- Estilo noturno personalizado
 
-⸻
+---
 
-⚙️ Instalação de Ferramentas
+## ⚙️ Instalação e Execução
 
-1. Node.js (Vue)
+### ✅ Pré-requisitos
+- Node.js 18+
+- Vue CLI (opcional, mas útil)
+- JDK 17
+- PostgreSQL
+- Maven
 
-$ node -v
-$ npm -v
+---
 
-Instale em: https://nodejs.org
+### 🔧 Configuração do Ambiente Backend
+1. Clone o projeto:
+```bash
+git clone https://github.com/seuusuario/agendamento-medico.git
+cd agendamento-medico/backend
+```
 
-2. Vue CLI
+2. Configure o banco no PostgreSQL:
+```bash
+createdb agendamento_db
+createuser seu-nome --superuser
+```
+Ou via `psql`:
+```sql
+CREATE USER seu-nome WITH PASSWORD 'atendimentomedico';
+CREATE DATABASE agendamento_db OWNER seu-nome;
+```
 
-$ npm install -g @vue/cli
-$ vue --version
-
-3. Java (JDK 17)
-
-$ brew install openjdk@17
-$ echo 'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
-$ source ~/.zshrc
-$ java -version
-
-4. PostgreSQL
-
-$ brew install postgresql
-$ brew services start postgresql
-$ createuser -s postgres
-$ createdb agendamento_db
-$ psql postgres
-
-
-⸻
-
-🏗️ Criação do Projeto Spring Boot
-	•	Site: start.spring.io
-	•	Project: Maven
-	•	Language: Java
-	•	Spring Boot: 3.4.7
-	•	Group: com.agendamento
-	•	Artifact: backend
-	•	Nome do projeto: backend
-	•	Java version: 17
-	•	Packaging: Jar
-
-Dependências adicionadas:
-	•	Spring Web
-	•	Spring Data JPA
-	•	PostgreSQL Driver
-	•	Spring Security
-	•	DevTools
-	•	Validation
-
-⸻
-
-🛠️ Configuração do Banco de Dados
-
-src/main/resources/application.properties
-
+3. Edite o arquivo `application.properties`:
+```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/agendamento_db
-spring.datasource.username=ivanlott
+spring.datasource.username=seu-nome
 spring.datasource.password=atendimentomedico
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-server.port=8080
+```
 
+4. Execute a aplicação:
+```bash
+./mvnw spring-boot:run
+# ou
+mvn spring-boot:run
+```
 
-⸻
+---
 
-▶️ Execução do Projeto
-
-$ ./mvnw spring-boot:run
-
-Caso necessário:
-
-$ brew install maven
-$ mvn spring-boot:run
-
-Backend disponível em: http://localhost:8080
-
-⸻
-
-✅ Funcionalidades Implementadas
-	•	Cadastro, listagem, edição e remoção de médicos, pacientes e agendamentos
-	•	Filtros por médico, paciente e data
-	•	Validações com @Valid
-	•	Autenticação via JWT (com login e geração de token)
-	•	Controle de acesso por perfil (ROLE_ADMIN, ROLE_MEDICO, ROLE_PACIENTE)
-	•	Testes com JUnit e Mockito
-	•	Documentação com Swagger (/swagger-ui/index.html)
-
-⸻
-
-🔐 Autenticação com JWT
-	•	Rota pública:
-
+## 🌐 Testando o Backend
+- Swagger: http://localhost:8080/swagger-ui/index.html
+- Exemplo de Login via API:
+```json
 POST /login
 {
-  "login": "usuario",
+  "login": "admin",
   "senha": "123456"
 }
+```
 
-	•	Resposta:
+---
 
-{
-  "token": "eyJhbGciOiJIUzI1NiIs..."
-}
+## 💻 Configuração do Frontend
+1. Vá para o diretório do frontend:
+```bash
+cd ../frontend
+```
 
-	•	Para autenticar, envie o token no header:
+2. Instale as dependências:
+```bash
+npm install
+```
 
-Authorization: Bearer SEU_TOKEN_AQUI
+3. Rode o projeto:
+```bash
+npm run dev
+```
 
+4. Acesse:  
+http://localhost:5174
 
-⸻
+---
 
-📄 Swagger
+## 🛠️ Funcionalidades
+- Login via JWT
+- Listagem, cadastro, edição e deleção de médicos
+- Listagem, cadastro, edição e deleção de pacientes
+- Agendamento de consultas
+- Filtros por data, médico e paciente
+- Autorização por perfis (admin, médico, paciente)
+- Testes unitários com JUnit e Mockito
+- Proteção de rotas frontend com token
+- Tema escuro estilizado
 
-Acesse:
+---
 
-http://localhost:8080/swagger-ui/index.html
+## 🎨 Tema Escuro
 
+Design inspirado no universo do U2 — elegante, escuro, impactante:
+- Background geral: `#121212`
+- Painéis e caixas: `#1e1e1e`
+- Textos: `#f5f5f5`
+- Destaques: vermelho profundo `#950707`
 
-⸻
+---
 
-🔁 Passo a Passo – Cadastro via API (Insomnia ou Postman)
+## 📁 Estrutura de Diretórios
 
-Criar Médico
-
-POST http://localhost:8080/medicos
-
-{
-  "nome": "The Edge",
-  "email": "the.edge@u2.com",
-  "crm": "777",
-  "especialidade": "NEUROCIRURGIA",
-  "endereco": {
-    "logradouro": "Rua Joshua Tree",
-    "bairro": "Rockville",
-    "cep": "4321-000",
-    "cidade": "Dublin",
-    "uf": "IR",
-    "numero": "1",
-    "complemento": "Estúdio 360"
-  }
-}
-
-Atualizar Médico
-
-PUT http://localhost:8080/medicos/2
-
-{
-  "id": 2,
-  "nome": "Bono",
-  "email": "bono@u2.com",
-  "crm": "12314",
-  "especialidade": "CARDIOLOGIA",
-  "endereco": {
-    "logradouro": "Rua Cedarwood",
-    "bairro": "Rockville",
-    "cep": "32412-000",
-    "cidade": "Dublin",
-    "uf": "IE",
-    "numero": "2",
-    "complemento": "Estúdio HTDAB"
-  }
-}
-
-
-⸻
-
-🧪 Testes Automatizados
-
-Testes criados:
-	•	MedicoServiceTest
-	•	PacienteServiceTest
-	•	AgendamentoServiceTest
-	•	AgendamentoControllerTest
-
-⸻
-
-🧾 Estrutura das Tabelas
-	•	usuarios: id, login, senha, role, paciente_id, medico_id, admin_id
-	•	medicos, pacientes, admin: informações pessoais
-	•	agendamentos: data, motivo, descrição, FK para médico e paciente
-
-⸻
-
-🧭 Organização do Projeto
-
+```
 agendamento-medico/
-│
 ├── backend/
 │   ├── controller/
 │   ├── dto/
 │   ├── model/
 │   ├── repository/
 │   ├── service/
-│   ├── config/
-│   └── security/
-└── frontend/ (em breve)
+│   ├── security/
+│   └── config/
+└── frontend/
+    ├── src/
+    │   ├── assets/
+    │   ├── views/
+    │   ├── router/
+    │   ├── stores/
+    │   ├── services/
+    │   └── App.vue
+    └── vite.config.js
+```
 
+---
 
-⸻
+## 🧪 Testes Automatizados
 
-📌 Observações Finais
-	•	Projeto com arquitetura limpa (Controller → Service → Repository)
-	•	Separação por perfis (ROLE_ADMIN, ROLE_MEDICO, ROLE_PACIENTE)
-	•	Validações robustas e tratamento de exceções
+1. Execute os testes com:
+```bash
+mvn test
+```
 
-⸻
+2. Testes presentes para:
+- Médicos
+- Pacientes
+- Agendamentos
+- Controllers com `@SpringBootTest`
 
-🎯 Próximos passos
-	•	Finalizar frontend em Vue.js
-	•	Adicionar testes de integração
-	•	Realizar deploy (Render, Railway ou outro)
+---
 
-⸻
+## 🔐 Autenticação JWT
 
-Developed with rock and code — by Ivan Lott
+### Exemplo de login:
+```json
+POST /login
+{
+  "login": "admin",
+  "senha": "123456"
+}
+```
+
+### Resposta:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+### Envie o token nas requisições protegidas:
+```
+Authorization: Bearer SEU_TOKEN
+```
+
+---
+
+## 🧾 Tabelas
+
+- `usuarios`: login, senha (criptografada), role, paciente_id, medico_id, admin_id  
+- `medicos/pacientes/admin`: dados pessoais  
+- `agendamentos`: data, descrição, médico, paciente  
+
+---
+
+## 🎯 Próximos Passos
+- Listagem de agendamentos com visual agradável
+- Responsividade no frontend
+- Deploy em ambiente cloud (Render, Railway, etc.)
+- Criação de painel do médico e paciente
+
+---
+
+## 🚀 Rodando o Projeto do Zero
+
+```bash
+# BACKEND
+cd backend
+mvn spring-boot:run
+
+# FRONTEND
+cd ../frontend
+npm install
+npm run dev
+```
+
+---
+
+## 💻 Desenvolvido por
+
+**Ivan Lott** — com café, código e muitas horas escutando música.
