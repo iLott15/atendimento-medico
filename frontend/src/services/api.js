@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+export const getVinculosDoMedico = (idMedico) => api.get(`/vinculos-medico/${idMedico}`);
+
 const api = axios.create({
     baseURL: 'http://localhost:8080', 
 })

@@ -4,7 +4,9 @@
       <h1>Bem-vindo</h1>
       <input type="text" placeholder="Usuário" v-model="login" />
       <input type="password" placeholder="Senha" v-model="senha" />
-      <button @click="fazerLogin">Entrar</button>
+      <button :disabled="loading" @click="fazerLogin">
+        {{ loading ? 'Entrando...' : 'Entrar' }}
+      </button>
     </div>
   </div>
 </template>
@@ -14,24 +16,35 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import api from '@/services/api'
+import { showToast } from '@/utils/toast'
 
 const router = useRouter()
 const auth = useAuthStore()
+const loading = ref(false)
 
 const login = ref('')
 const senha = ref('')
 
 const fazerLogin = async () => {
+  loading.value = true
   try {
     const { data } = await api.post('/login', {
       login: login.value,
       senha: senha.value
     })
-    auth.setToken(data.token)
-    const redirectPath = router.currentRoute.value.query.redirect || '/'
-    router.push(redirectPath)
+
+    // console.log('🔥 RESPOSTA LOGIN:', data)
+
+    if (data.token) {
+      auth.setToken(data.token)
+      const redirectPath = router.currentRoute.value.query.redirect || '/'
+      router.push(redirectPath)
+    } else {
+      showToast("Login inválido", "error")
+    }
   } catch (error) {
-    alert('Login inválido')
+    console.error('🚨 ERRO LOGIN:', error)
+    showToast("Erro ao conectar com o servidor", "error")
   }
 }
 </script>
