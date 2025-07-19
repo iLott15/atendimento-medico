@@ -174,8 +174,8 @@ h2 {
 }
 
 .btn-acesso {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #516d91;
+  color: #ffffff;
   border: none;
   padding: 14px 32px;
   font-size: 16px;
@@ -189,7 +189,7 @@ h2 {
 }
 
 .btn-acesso:hover {
-  background-color: #0056b3;
+  background-color: #93beec;
 }
 
 body {

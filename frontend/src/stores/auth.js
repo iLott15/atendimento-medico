@@ -19,6 +19,12 @@ export const useAuthStore = defineStore('auth', {
       } catch (err) {
         console.error('Erro ao buscar usuário logado:', err)
       }
+    },
+    logout() {
+      this.token = ''
+      this.user = null
+      localStorage.removeItem('token')
+      delete api.defaults.headers.common['Authorization']
     }
   }
 })
