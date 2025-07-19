@@ -1,11 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import LoginView from '@/views/LoginView.vue'
+import DashboardView from '@/views/DashboardView.vue'
+import MedicosView from '@/views/MedicosView.vue'
 import HomeView from '@/views/HomeView.vue'
+import PacientesView from '@/views/PacientesView.vue'
+import AtendimentoView from '@/views/AtendimentoView.vue'
+
 
 const routes = [
   { path: '/login', component: LoginView },
-  { path: '/', component: HomeView, meta: { requiresAuth: true } },
+  { path: '/', component: DashboardView, meta: { requiresAuth: true } },
+  { path: '/medicos', component: MedicosView, meta: { requiresAuth: true } },
+  { path: '/pacientes', component: PacientesView, meta: { requiresAuth: true } },
+  { path: '/atendimentos', component: AtendimentoView, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({
