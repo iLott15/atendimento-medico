@@ -55,9 +55,21 @@ public class AgendamentoController {
     }
 
     @PutMapping("/{id}")
-    public Agendamento atualizar(@PathVariable Long id, @RequestBody Agendamento agendamentoAtualizado) {
-        agendamentoAtualizado.setId(id);
-        return agendamentoService.salvar(agendamentoAtualizado);
+    public ResponseEntity<AgendamentoResponseDTO> atualizar(@PathVariable Long id,
+            @RequestBody @Valid AgendamentoRequestDTO dto) {
+        Medico medico = medicoService.buscarPorId(dto.idMedico());
+        Paciente paciente = pacienteService.buscarPorId(dto.idPaciente());
+
+        Agendamento agendamento = new Agendamento();
+        agendamento.setId(id);
+        agendamento.setMedico(medico);
+        agendamento.setPaciente(paciente);
+        agendamento.setData(dto.data());
+        agendamento.setMotivo(dto.motivo());
+        agendamento.setDescricao(dto.descricao());
+
+        Agendamento atualizado = agendamentoService.salvar(agendamento);
+        return ResponseEntity.ok(new AgendamentoResponseDTO(atualizado));
     }
 
     @GetMapping

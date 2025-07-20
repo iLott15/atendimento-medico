@@ -9,11 +9,15 @@
       <p>🔐 Perfil: <span class="role">{{ user.role }}</span></p>
     </section>
 
-    <div class="grid">
-      <div class="box">
-        <h2>🩺 Atendimentos</h2>
-        <button class="btn-acesso" @click="irPara('atendimentos')">Ver atendimentos</button>
+
+    <div class="grid grid-full">
+      <div class="box full">
+        <h2>🩺 Agendar Atendimentos</h2>
+        <button class="btn-acesso" @click="irPara('atendimentos')">Agendar atendimentos</button>
       </div>
+    </div>
+
+    <div class="grid">
 
       <div class="box">
         <h2>👤 Pacientes</h2>
@@ -23,13 +27,6 @@
       <div class="box">
         <h2>🧑‍⚕️ Médicos</h2>
         <button class="btn-acesso" @click="irPara('medicos')">Ver médicos</button>
-      </div>
-    </div>
-
-    <div class="grid grid-full">
-      <div class="box full">
-        <h2>📅 Agendar Atendimento</h2>
-        <button class="btn-acesso" @click="irPara('agendar')">Agendar</button>
       </div>
     </div>
   </div>
@@ -104,7 +101,7 @@ onMounted(fetchUser)
 }
 
 .grid>.box {
-  grid-column: span 4;
+  grid-column: span 6;
 }
 
 .grid-full {

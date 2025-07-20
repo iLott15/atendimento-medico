@@ -22,7 +22,7 @@ public class Agendamento {
     private Medico medico;
 
     @NotNull(message = "Data e hora da consulta são obrigatórias")
-    @Future(message = "A data da consulta deve estar no futuro")
+    @Future(message = "A data da consulta deve ser outra, pois já existe agendamento para essa data.")
     private LocalDateTime data;
 
     @Column(nullable = true)

@@ -13,27 +13,21 @@ public class AgendamentoResponseDTO {
     private String motivo;
     private String descricao;
 
-    public AgendamentoResponseDTO(Agendamento agendamento) {
-        this.id = agendamento.getId();
-        this.medicoNome = agendamento.getMedico().getNome();
-        this.pacienteNome = agendamento.getPaciente().getNome();
-        this.data = agendamento.getData();
-        this.motivo = agendamento.getMotivo();
-        this.descricao = agendamento.getDescricao();
+    private Long idMedico;
+    private Long idPaciente;
+
+    public AgendamentoResponseDTO(Agendamento a) {
+        this.id = a.getId();
+        this.medicoNome = a.getMedico().getNome();
+        this.idMedico = a.getMedico().getId();
+        this.pacienteNome = a.getPaciente().getNome();
+        this.idPaciente = a.getPaciente().getId();
+        this.data = a.getData();
+        this.motivo = a.getMotivo();
+        this.descricao = a.getDescricao();
     }
 
-    public AgendamentoResponseDTO(Long id, LocalDateTime data, String descricao, String motivo, String medicoNome,
-            String pacienteNome) {
-        this.id = id;
-        this.data = data;
-        this.descricao = descricao;
-        this.motivo = motivo;
-        this.medicoNome = medicoNome;
-        this.pacienteNome = pacienteNome;
-    }
-
-    // Getters e Setters
-
+    // Getters
     public Long getId() {
         return id;
     }
@@ -56,5 +50,13 @@ public class AgendamentoResponseDTO {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public Long getIdMedico() {
+        return idMedico;
+    }
+
+    public Long getIdPaciente() {
+        return idPaciente;
     }
 }

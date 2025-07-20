@@ -36,7 +36,6 @@ public class AgendamentoService {
     }
 
     public AgendamentoResponseDTO agendar(AgendamentoRequestDTO dto) {
-        // Verifica conflito de horário para o médico
         boolean conflito = agendamentoRepository.existsByMedicoIdAndData(dto.idMedico(), dto.data());
 
         if (conflito) {
