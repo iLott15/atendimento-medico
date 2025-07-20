@@ -81,6 +81,7 @@ onMounted(fetchUser)
 }
 
 .user-info {
+  color: #fff;
   margin-bottom: 30px;
   font-size: 18px;
 }
@@ -130,7 +131,7 @@ onMounted(fetchUser)
   font-size: 20px;
   margin-bottom: 16px;
   text-align: center;
-  color: #333;
+  color: #fff;
 }
 
 .btn-acesso {

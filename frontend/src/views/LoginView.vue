@@ -90,7 +90,7 @@ input {
 }
 
 input:focus {
-  border-color: #ff0033;
+  border-color: #007bff;
 }
 
 input::placeholder {
@@ -98,7 +98,7 @@ input::placeholder {
 }
 
 button {
-  background-color: #990f0f;
+  background-color: #007bff;
   color: #fff;
   border: none;
   padding: 12px;
@@ -110,6 +110,6 @@ button {
 }
 
 button:hover {
-  background-color: #c11f1f;
+  background-color: #007bff;
 }
 </style>
