@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <header class="dashboard-header">
-      <h1>Dashboard</h1>
+      <h1>Página Inicial</h1>
     </header>
 
     <section class="user-info" v-if="user">
@@ -24,18 +24,10 @@
         <h2>🧑‍⚕️ Médicos</h2>
         <button class="btn-acesso" @click="irPara('medicos')">Ver médicos</button>
       </div>
+    </div>
 
-      <div class="box">
-        <h2>👤 Criar/Editar Paciente</h2>
-        <button class="btn-acesso" @click="irPara('editar-paciente')">Gerenciar Paciente</button>
-      </div>
-
-      <div class="box">
-        <h2>🧑‍⚕️ Criar/Editar Médico</h2>
-        <button class="btn-acesso" @click="irPara('editar-medico')">Gerenciar Médico</button>
-      </div>
-
-      <div class="box">
+    <div class="grid grid-full">
+      <div class="box full">
         <h2>📅 Agendar Atendimento</h2>
         <button class="btn-acesso" @click="irPara('agendar')">Agendar</button>
       </div>
@@ -71,8 +63,8 @@ onMounted(fetchUser)
 
 <style scoped>
 .dashboard {
-  background-color: #121212;
-  color: #f5f5f5;
+  background-color: #000;
+  color: #000;
   min-height: 100vh;
   padding: 40px;
   font-family: 'Segoe UI', sans-serif;
@@ -91,56 +83,17 @@ onMounted(fetchUser)
   color: #fff;
 }
 
-.dashboard-header button {
-  background-color: #990f0f;
-  border: none;
-  padding: 10px 18px;
-  font-weight: 500;
-  border-radius: 6px;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.dashboard-header button:hover {
-  background-color: #c11f1f;
-}
-
 .user-info {
   margin-bottom: 30px;
   font-size: 18px;
 }
 
 .role {
-  background-color: #222;
+  background-color: #d1e7ff;
   padding: 4px 10px;
   border-radius: 4px;
-  color: #208adc;
+  color: #007bff;
   font-weight: bold;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 20px;
-}
-
-.box {
-  background-color: #1c1c1e;
-  padding: 25px;
-  border-radius: 10px;
-  border-left: 5px solid #208adc;
-  box-shadow: 0 0 10px rgba(255, 0, 51, 0.2);
-  grid-column: span 4;
-}
-
-.box.full {
-  grid-column: span 12;
-}
-
-.box h2 {
-  margin-bottom: 10px;
-  font-size: 20px;
 }
 
 .grid {
@@ -150,8 +103,22 @@ onMounted(fetchUser)
   margin-top: 30px;
 }
 
-.box {
+.grid>.box {
   grid-column: span 4;
+}
+
+.grid-full {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+.full {
+  grid-column: span 12 !important;
+}
+
+.box {
   background-color: #91a8c8;
   padding: 24px;
   border-radius: 12px;
@@ -162,15 +129,11 @@ onMounted(fetchUser)
   justify-content: center;
 }
 
-.box.full {
-  grid-column: span 12;
-}
-
-h2 {
-  color: #333;
+.box h2 {
   font-size: 20px;
   margin-bottom: 16px;
   text-align: center;
+  color: #333;
 }
 
 .btn-acesso {
@@ -190,10 +153,5 @@ h2 {
 
 .btn-acesso:hover {
   background-color: #93beec;
-}
-
-body {
-  background-color: #f0f2f5;
-  font-family: 'Segoe UI', sans-serif;
 }
 </style>
