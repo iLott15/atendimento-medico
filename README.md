@@ -1,6 +1,6 @@
 # 🩺 Sistema de Agendamento Médico
 
-Projeto fullstack construído como parte de um desafio técnico, com foco em qualidade de código, autenticação segura, e arquitetura escalável. Permite gerenciar médicos, pacientes e agendamentos.
+Projeto fullstack construído como parte de um desafio técnico, com foco em qualidade de código, autenticação segura e arquitetura escalável. Permite gerenciar médicos, pacientes e agendamentos.
 
 ---
 
@@ -16,13 +16,15 @@ Projeto fullstack construído como parte de um desafio técnico, com foco em qua
 - JUnit + Mockito (Testes unitários e integração)
 - Maven
 
-### 🔜 Frontend (Vue)
+### 🔜 Frontend (Vue 3)
 - Vue 3 + Composition API
 - Vue Router
 - Pinia (State Management)
-- Prettier
 - Vite
-- Estilo noturno personalizado
+- Prettier
+- SweetAlert2 (alertas modernos)
+- Toastify (notificações)
+- Estilo escuro personalizado 🎸
 
 ---
 
@@ -30,39 +32,43 @@ Projeto fullstack construído como parte de um desafio técnico, com foco em qua
 
 ### ✅ Pré-requisitos
 - Node.js 18+
-- Vue CLI (opcional, mas útil)
 - JDK 17
 - PostgreSQL
 - Maven
 
 ---
 
-### 🔧 Configuração do Ambiente Backend
-1. Clone o projeto:
+### 🔧 Backend
+
 ```bash
 git clone https://github.com/seuusuario/agendamento-medico.git
 cd agendamento-medico/backend
 ```
 
-2. Configure o banco no PostgreSQL:
+1. Crie o banco de dados:
+
 ```bash
 createdb agendamento_db
-createuser seu-nome --superuser
-```
-Ou via `psql`:
-```sql
-CREATE USER seu-nome WITH PASSWORD 'atendimentomedico';
-CREATE DATABASE agendamento_db OWNER seu-nome;
+createuser seu-usuario --superuser
 ```
 
-3. Edite o arquivo `application.properties`:
+Ou via SQL:
+
+```sql
+CREATE USER seu-usuario WITH PASSWORD 'atendimentomedico';
+CREATE DATABASE agendamento_db OWNER seu-usuario;
+```
+
+2. Configure `src/main/resources/application.properties`:
+
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/agendamento_db
-spring.datasource.username=seu-nome
+spring.datasource.username=seu-usuario
 spring.datasource.password=atendimentomedico
 ```
 
-4. Execute a aplicação:
+3. Rode a aplicação:
+
 ```bash
 ./mvnw spring-boot:run
 # ou
@@ -71,9 +77,12 @@ mvn spring-boot:run
 
 ---
 
-## 🌐 Testando o Backend
-- Swagger: http://localhost:8080/swagger-ui/index.html
-- Exemplo de Login via API:
+### 🌐 Teste o Backend
+
+- Swagger UI: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+Login exemplo:
+
 ```json
 POST /login
 {
@@ -84,51 +93,36 @@ POST /login
 
 ---
 
-## 💻 Configuração do Frontend
-1. Vá para o diretório do frontend:
+### 💻 Frontend
+
 ```bash
 cd ../frontend
-```
-
-2. Instale as dependências:
-```bash
 npm install
-```
-
-3. Rode o projeto:
-```bash
 npm run dev
 ```
 
-4. Acesse:  
-http://localhost:5174
+Acesse via navegador:
+[http://localhost:5174](http://localhost:5174)
 
 ---
 
 ## 🛠️ Funcionalidades
-- Login via JWT
-- Listagem, cadastro, edição e deleção de médicos
-- Listagem, cadastro, edição e deleção de pacientes
-- Agendamento de consultas
-- Filtros por data, médico e paciente
-- Autorização por perfis (admin, médico, paciente)
-- Testes unitários com JUnit e Mockito
-- Proteção de rotas frontend com token
-- Tema escuro estilizado
+
+- 🔐 Login JWT com autenticação segura
+- 👨‍⚕️ CRUD de médicos
+- 🧍 CRUD de pacientes (com endereço completo)
+- 📅 Agendamentos com filtro por data, médico e paciente
+- 🛡️ Autorização por perfis (`admin`, `medico`, `paciente`)
+- 🧪 Testes com JUnit e Mockito
+- 🔒 Rotas protegidas no frontend
+- 🖤 Tema escuro com visual inspirado no U2
+- 💾 Validação e conversão automática de campos de formulário
+- ✏️ Edição de paciente com modal estilizado
+- 🗑 Confirmação de exclusão via SweetAlert2
 
 ---
 
-## 🎨 Tema Escuro
-
-Design inspirado no universo do U2 — elegante, escuro, impactante:
-- Background geral: `#121212`
-- Painéis e caixas: `#1e1e1e`
-- Textos: `#f5f5f5`
-- Destaques: vermelho profundo `#950707`
-
----
-
-## 📁 Estrutura de Diretórios
+## 📦 Estrutura do Projeto
 
 ```
 agendamento-medico/
@@ -144,34 +138,18 @@ agendamento-medico/
     ├── src/
     │   ├── assets/
     │   ├── views/
+    │   ├── components/
     │   ├── router/
     │   ├── stores/
     │   ├── services/
     │   └── App.vue
-    └── vite.config.js
 ```
 
 ---
 
-## 🧪 Testes Automatizados
+## 🔐 JWT - Exemplo de Uso
 
-1. Execute os testes com:
-```bash
-mvn test
-```
-
-2. Testes presentes para:
-- Médicos
-- Pacientes
-- Agendamentos
-- Controllers com `@SpringBootTest`
-
----
-
-## 🔐 Autenticação JWT
-
-### Exemplo de login:
-```json
+```http
 POST /login
 {
   "login": "admin",
@@ -179,44 +157,74 @@ POST /login
 }
 ```
 
-### Resposta:
+Resposta:
+
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIs..."
+  "token": "eyJhbGciOiJIUzI1NiIsInR..."
 }
 ```
 
-### Envie o token nas requisições protegidas:
+Use em chamadas autenticadas:
+
 ```
 Authorization: Bearer SEU_TOKEN
 ```
 
 ---
 
-## 🧾 Tabelas
+## 🧾 Tabelas Principais
 
-- `usuarios`: login, senha (criptografada), role, paciente_id, medico_id, admin_id  
-- `medicos/pacientes/admin`: dados pessoais  
+- `usuarios`: login, senha, role, vinculação com paciente/médico/admin  
+- `pacientes`: dados pessoais + endereço completo (logradouro, número, bairro, cidade, UF, cep)  
+- `medicos`: nome, especialidade, email, telefone, horários  
 - `agendamentos`: data, descrição, médico, paciente  
 
 ---
 
-## 🎯 Próximos Passos
-- Listagem de agendamentos com visual agradável
-- Responsividade no frontend
-- Deploy em ambiente cloud (Render, Railway, etc.)
-- Criação de painel do médico e paciente
+## 🧪 Testes Automatizados
+
+```bash
+mvn test
+```
+
+Cobertura para:
+- CRUDs
+- Validações
+- Agendamento
+- Autenticação
 
 ---
 
-## 🚀 Rodando o Projeto do Zero
+## 🎨 Tema Visual
+
+Inspirado na estética do U2:
+- Fundo: `#000000`
+- Cartões: `#ffffff` com sombras suaves
+- Botões: `#007bff`, `#ffc107`, `#dc3545`
+- Texto: `#333`, `#fff` em destaque
+- Alertas: SweetAlert estilizado
+
+---
+
+## 📌 Próximas Features
+
+- Tela de dashboard com indicadores
+- Tela de agenda semanal do médico
+- Vínculo direto de pacientes a médicos
+- Responsividade mobile
+- Deploy no Railway, Vercel, ou Render
+
+---
+
+## 💻 Executando o Projeto
 
 ```bash
-# BACKEND
+# Backend
 cd backend
 mvn spring-boot:run
 
-# FRONTEND
+# Frontend
 cd ../frontend
 npm install
 npm run dev
@@ -224,6 +232,7 @@ npm run dev
 
 ---
 
-## 💻 Desenvolvido por
+## 👨‍💻 Desenvolvido por
 
-**Ivan Lott** — com café, código e muitas horas escutando música.
+**Ivan Lott**  
+Com café, código, e o som de *Beautiful Day* no repeat. ☕🎧
