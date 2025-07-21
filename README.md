@@ -29,12 +29,79 @@ Projeto fullstack construído como parte de um desafio técnico, com foco em qua
 ---
 
 ## ⚙️ Instalação e Execução
-
 ### ✅ Pré-requisitos
-- Node.js 18+
-- JDK 17
-- PostgreSQL
-- Maven
+
+Certifique-se de instalar os seguintes requisitos antes de rodar o projeto:
+
+- **Node.js 18+**  
+  Baixe em [nodejs.org](https://nodejs.org/).  
+  Ou instale via terminal:
+
+  ```bash
+  # macOS (Homebrew)
+  brew install node@18
+
+  # Ubuntu/Debian
+  curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+
+  # Windows (Chocolatey)
+  choco install nodejs-lts
+  ```
+
+- **JDK 17**  
+  Baixe em [Oracle](https://www.oracle.com/java/technologies/downloads/) ou [Adoptium](https://adoptium.net/).  
+  Ou instale via terminal:
+
+  ```bash
+  # macOS (Homebrew)
+  brew install openjdk@17
+
+  # Ubuntu/Debian
+  sudo apt-get install openjdk-17-jdk
+
+  # Windows (Chocolatey)
+  choco install openjdk17
+  ```
+
+- **PostgreSQL**  
+  Baixe em [postgresql.org/download](https://www.postgresql.org/download/).  
+  Ou instale via terminal:
+
+  ```bash
+  # macOS (Homebrew)
+  brew install postgresql
+
+  # Ubuntu/Debian
+  sudo apt-get install postgresql postgresql-contrib
+
+  # Windows (Chocolatey)
+  choco install postgresql
+  ```
+
+- **Maven**  
+  Baixe em [maven.apache.org](https://maven.apache.org/download.cgi).  
+  Ou instale via terminal:
+
+  ```bash
+  # macOS (Homebrew)
+  brew install maven
+
+  # Ubuntu/Debian
+  sudo apt-get install maven
+
+  # Windows (Chocolatey)
+  choco install maven
+  ```
+
+Após instalar, verifique as versões com:
+
+```bash
+node -v
+java -version
+psql --version
+mvn -v
+```
 
 ---
 
