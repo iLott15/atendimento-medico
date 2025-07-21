@@ -155,6 +155,7 @@ mvn spring-boot:run
 1. Tabela usuarios
 Armazena informações de login, senha, papel do usuário e vínculo com paciente, médico ou admin.
 
+```bash
   CREATE TABLE usuarios (
       id SERIAL PRIMARY KEY,
       login VARCHAR(50) UNIQUE NOT NULL,
@@ -166,10 +167,12 @@ Armazena informações de login, senha, papel do usuário e vínculo com pacient
       FOREIGN KEY (paciente_id) REFERENCES pacientes(id),
       FOREIGN KEY (medico_id) REFERENCES medicos(id)
   );
+  ```
 
 2. Tabela pacientes
 Armazena dados pessoais e endereço completo.
 
+```bash
   CREATE TABLE pacientes (
       id SERIAL PRIMARY KEY,
       nome VARCHAR(100) NOT NULL,
@@ -182,10 +185,12 @@ Armazena dados pessoais e endereço completo.
       uf CHAR(2),
       cep VARCHAR(9)
   );
+  ```
 
 3. Tabela medicos
 Armazena informações do médico.
 
+```bash
   CREATE TABLE medicos (
       id SERIAL PRIMARY KEY,
       nome VARCHAR(100) NOT NULL,
@@ -194,10 +199,12 @@ Armazena informações do médico.
       telefone VARCHAR(20),
       horarios TEXT -- Pode ser ajustado para uma tabela separada se necessário
   );
+  ```
 
 4. Tabela agendamentos
 Relaciona médicos e pacientes em um agendamento.
 
+```bash
   CREATE TABLE agendamentos (
       id SERIAL PRIMARY KEY,
       data TIMESTAMP NOT NULL,
@@ -207,9 +214,11 @@ Relaciona médicos e pacientes em um agendamento.
       FOREIGN KEY (medico_id) REFERENCES medicos(id),
       FOREIGN KEY (paciente_id) REFERENCES pacientes(id)
   );
+  ```
 
 5. Tabela admin
 
+```bash
   CREATE TABLE admin (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -217,6 +226,7 @@ Relaciona médicos e pacientes em um agendamento.
     telefone VARCHAR(20),
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
+  ```
 
 Dicas:
 
