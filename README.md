@@ -242,11 +242,83 @@ Authorization: Bearer SEU_TOKEN
 
 ## 🧾 Tabelas Principais
 
-- `usuarios`: login, senha, role, vinculação com paciente/médico/admin  
+- `usuarios`: id, nome, role, email e telefone, e data da criação
 - `pacientes`: dados pessoais + endereço completo (logradouro, número, bairro, cidade, UF, cep)  
 - `medicos`: nome, especialidade, email, telefone, horários  
 - `agendamentos`: data, descrição, médico, paciente  
+- `admin`: login, senha, role, vinculação com paciente/médico/admin  
 
+1. Tabela usuarios
+Armazena informações de login, senha, papel do usuário e vínculo com paciente, médico ou admin.
+
+  CREATE TABLE usuarios (
+      id SERIAL PRIMARY KEY,
+      login VARCHAR(50) UNIQUE NOT NULL,
+      senha VARCHAR(255) NOT NULL,
+      role VARCHAR(20) NOT NULL, -- Ex: 'paciente', 'medico', 'admin'
+      paciente_id INTEGER,       -- FK opcional
+      medico_id INTEGER,         -- FK opcional
+      -- FKs para vinculação
+      FOREIGN KEY (paciente_id) REFERENCES pacientes(id),
+      FOREIGN KEY (medico_id) REFERENCES medicos(id)
+  );
+
+2. Tabela pacientes
+Armazena dados pessoais e endereço completo.
+
+  CREATE TABLE pacientes (
+      id SERIAL PRIMARY KEY,
+      nome VARCHAR(100) NOT NULL,
+      data_nascimento DATE,
+      cpf VARCHAR(14) UNIQUE,
+      logradouro VARCHAR(100),
+      numero VARCHAR(10),
+      bairro VARCHAR(50),
+      cidade VARCHAR(50),
+      uf CHAR(2),
+      cep VARCHAR(9)
+  );
+
+3. Tabela medicos
+Armazena informações do médico.
+
+  CREATE TABLE medicos (
+      id SERIAL PRIMARY KEY,
+      nome VARCHAR(100) NOT NULL,
+      especialidade VARCHAR(50),
+      email VARCHAR(100) UNIQUE,
+      telefone VARCHAR(20),
+      horarios TEXT -- Pode ser ajustado para uma tabela separada se necessário
+  );
+
+4. Tabela agendamentos
+Relaciona médicos e pacientes em um agendamento.
+
+  CREATE TABLE agendamentos (
+      id SERIAL PRIMARY KEY,
+      data TIMESTAMP NOT NULL,
+      descricao TEXT,
+      medico_id INTEGER NOT NULL,
+      paciente_id INTEGER NOT NULL,
+      FOREIGN KEY (medico_id) REFERENCES medicos(id),
+      FOREIGN KEY (paciente_id) REFERENCES pacientes(id)
+  );
+
+5. Tabela admin
+
+  CREATE TABLE admin (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    telefone VARCHAR(20),
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+Dicas:
+
+Ajuste os tipos de dados conforme a necessidade do seu projeto.
+Use SERIAL (PostgreSQL) ou AUTO_INCREMENT (MySQL) para IDs automáticos.
+Considere normalizar horários dos médicos em uma tabela separada se for necessário detalhar mais.
 ---
 
 ## 🧪 Testes Automatizados
@@ -265,7 +337,7 @@ Cobertura para:
 
 ## 🎨 Tema Visual
 
-Inspirado na estética do U2:
+Inspirado na estética mais escura:
 - Fundo: `#000000`
 - Cartões: `#ffffff` com sombras suaves
 - Botões: `#007bff`, `#ffc107`, `#dc3545`
@@ -300,6 +372,5 @@ npm run dev
 ---
 
 ## 👨‍💻 Desenvolvido por
-
 **Ivan Lott**  
-Com café, código, e o som de *Beautiful Day* no repeat. ☕🎧
+Com café, código, reggae, rock, e as vezes um rap, no repeat. ☕🎧
